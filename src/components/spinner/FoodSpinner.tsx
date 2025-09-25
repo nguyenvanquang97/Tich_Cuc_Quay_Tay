@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Trash2, Edit, Save, X, RotateCw, Award, XCircle, PartyPopper, Menu, ChevronLeft } from 'lucide-react';
-import { lunchFoods, snackFoods, drinkFoods, Food as FoodType } from '../../data/foodCategories';
+import { lunchFoods, snackFoods, drinkFoods, alcoholFoods, Food as FoodType } from '../../data/foodCategories';
 import Confetti from './Confetti';
 import SuccessAnimation from './SuccessAnimation';
 
@@ -13,7 +13,7 @@ const COLORS = [
 
 const FoodSpinner: React.FC = () => {
   const [foods, setFoods] = useState<FoodType[]>(lunchFoods);
-  const [currentCategory, setCurrentCategory] = useState<'lunch' | 'snack' | 'drink'>('lunch');
+  const [currentCategory, setCurrentCategory] = useState<'lunch' | 'snack' | 'drink' | 'alcohol'>('lunch');
 
   const [newFood, setNewFood] = useState('');
   const [newFoodImage, setNewFoodImage] = useState<File | null>(null);
@@ -30,7 +30,7 @@ const FoodSpinner: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Hàm chuyển đổi danh mục thực phẩm
-  const changeCategory = (category: 'lunch' | 'snack' | 'drink') => {
+  const changeCategory = (category: 'lunch' | 'snack' | 'drink' | 'alcohol') => {
     setCurrentCategory(category);
     switch (category) {
       case 'lunch':
@@ -41,6 +41,9 @@ const FoodSpinner: React.FC = () => {
         break;
       case 'drink':
         setFoods(drinkFoods);
+        break;
+      case 'alcohol':
+        setFoods(alcoholFoods);
         break;
     }
   };
@@ -377,10 +380,16 @@ const FoodSpinner: React.FC = () => {
           >
             Đồ uống
           </button>
+          <button 
+            onClick={() => changeCategory('alcohol')}
+            className={`px-3 py-1 rounded-full text-sm ${currentCategory === 'alcohol' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+          >
+            Món nhậu
+          </button>
         </div>
         
         {/* Add food form */}
-        <div className="p-4 border-b border-gray-200 sticky top-[108px] bg-white z-10">
+        <div className="p-4 border-b border-gray-200 sticky top-[120px] bg-white z-10">
           <div className="flex">
             <input
               ref={inputRef}

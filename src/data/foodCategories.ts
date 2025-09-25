@@ -4,7 +4,7 @@ export interface Food {
   id: string;
   name: string;
   color: string;
-  category: 'lunch' | 'snack' | 'drink';
+  category: 'lunch' | 'snack' | 'drink' | 'alcohol';
   imageUrl?: string;
 }
 
@@ -95,10 +95,35 @@ export const drinkFoods: Food[] = [
   { id: 'd21', name: 'Gì cũng được', color: getRandomColor(), category: 'drink' },
 ];
 
-// Tất cả các món ăn
-export const allFoods: Food[] = [...lunchFoods, ...snackFoods, ...drinkFoods];
+// Danh sách món nhậu
+export const alcoholFoods: Food[] = [
+  { id: 'alcohol1', name: 'Đậu phộng rang', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol2', name: 'Mực khô nướng', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol3', name: 'Chả cá nướng', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol4', name: 'Nem nướng', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol5', name: 'Bánh tráng nướng', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol6', name: 'Chân gà nướng', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol7', name: 'Tôm rang me', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol8', name: 'Ốc luộc', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol9', name: 'Nghêu hấp', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol10', name: 'Đuông dừa', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol11', name: 'Gỏi bò khô', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol12', name: 'Nộm hoa chuối', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol13', name: 'Bánh mì nướng muối ớt', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol14', name: 'Chả rươi', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol15', name: 'Thịt nướng xiên que', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol16', name: 'Cánh gà nướng', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol17', name: 'Dê', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol18', name: 'Thịt chó', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol19', name: 'Tiết canh', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol20', name: 'Chả cá lá vọng', color: getRandomColor(), category: 'alcohol' },
+  { id: 'alcohol21', name: 'Gì cũng được', color: getRandomColor(), category: 'alcohol' },
+];
+
+// Tổng hợp tất cả món ăn
+export const allFoods: Food[] = [...lunchFoods, ...snackFoods, ...drinkFoods, ...alcoholFoods];
 
 // Lấy danh sách món ăn theo thể loại
-export const getFoodsByCategory = (category: 'lunch' | 'snack' | 'drink'): Food[] => {
+export const getFoodsByCategory = (category: 'lunch' | 'snack' | 'drink' | 'alcohol'): Food[] => {
   return allFoods.filter(food => food.category === category);
 };
