@@ -1,11 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '475px',
+      },
       animation: {
         'fadeIn': 'fadeIn 0.5s ease-in-out',
         'slideInDown': 'slideInDown 0.3s ease-in-out',

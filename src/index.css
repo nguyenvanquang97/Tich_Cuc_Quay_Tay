@@ -43,3 +43,19 @@ code {
 .origin-bottom-center {
   transform-origin: 50% 100%;
 }
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  /* Improve touch targets on mobile */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent text selection on interactive elements */
+  button, .spinner {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+}
