@@ -24,6 +24,19 @@ html {
   background: #3b82f6;
 }
 
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -32,6 +45,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f9fafb;
+  transition: background-color 200ms;
+}
+
+.dark body {
+  background-color: #111827;
 }
 
 code {
@@ -46,14 +64,16 @@ code {
 
 /* Mobile-specific improvements */
 @media (max-width: 640px) {
+
   /* Improve touch targets on mobile */
   button {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Prevent text selection on interactive elements */
-  button, .spinner {
+  button,
+  .spinner {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     user-select: none;

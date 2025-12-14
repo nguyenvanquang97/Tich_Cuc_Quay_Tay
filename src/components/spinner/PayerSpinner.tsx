@@ -42,8 +42,8 @@ const PayerSpinner: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-gray-50 p-2 sm:p-4 md:p-8">
-      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-6 md:mb-8 text-gray-800">
+    <div className="flex flex-col items-center justify-center h-full bg-gray-50 dark:bg-gray-900 p-2 sm:p-4 md:p-8 transition-colors duration-200">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-6 md:mb-8 text-gray-800 dark:text-gray-100">
         <CreditCard className="inline-block w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 mr-2" />
         Ai sẽ trả tiền?
       </h2>
@@ -52,7 +52,7 @@ const PayerSpinner: React.FC = () => {
         {/* Spinner */}
         <motion.div
           ref={spinnerRef}
-          className="w-full h-full rounded-full overflow-hidden border-8 border-gray-200 shadow-lg relative"
+          className="w-full h-full rounded-full overflow-hidden border-8 border-gray-200 dark:border-gray-700 shadow-lg relative transition-colors duration-200"
           animate={{ rotate: rotation }}
           transition={{
             duration: isSpinning ? 3 + Math.random() * 2 : 0,
@@ -109,11 +109,11 @@ const PayerSpinner: React.FC = () => {
         </motion.div>
 
         {/* Center point */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full border-8 border-gray-800 z-10"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white dark:bg-gray-800 rounded-full border-8 border-gray-800 dark:border-gray-300 z-10 transition-colors duration-200"></div>
 
         {/* Pointer */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 z-10">
-          <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[40px] border-l-transparent border-r-transparent border-b-gray-800 mx-auto"></div>
+          <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[40px] border-l-transparent border-r-transparent border-b-gray-800 dark:border-b-gray-300 mx-auto transition-colors duration-200"></div>
         </div>
       </div>
 
@@ -142,7 +142,7 @@ const PayerSpinner: React.FC = () => {
               onClick={() => setShowPopup(false)}
             >
               <motion.div
-                className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl relative overflow-hidden"
+                className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl relative overflow-hidden transition-colors duration-200"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{
                   scale: 1,
@@ -157,11 +157,11 @@ const PayerSpinner: React.FC = () => {
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center gap-2">
                     <PartyPopper className="w-6 h-6 text-yellow-500" />
-                    <h3 className="text-xl font-bold">Người trả tiền được chọn!</h3>
+                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Người trả tiền được chọn!</h3>
                   </div>
                   <button
                     onClick={() => setShowPopup(false)}
-                    className="text-gray-500 hover:text-gray-700"
+                    className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                   >
                     <XCircle className="w-6 h-6" />
                   </button>
@@ -178,7 +178,7 @@ const PayerSpinner: React.FC = () => {
                     </div>
                   </div>
                   <motion.p
-                    className="text-gray-600 mb-2"
+                    className="text-gray-600 dark:text-gray-300 mb-2"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
@@ -199,7 +199,7 @@ const PayerSpinner: React.FC = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.8 }}
                   >
-                    <p className="text-gray-500 text-sm flex items-center justify-center gap-2">
+                    <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center justify-center gap-2">
                       <CreditCard className="w-4 h-4" />
                       Chuẩn bị ví đi nào!
                     </p>

@@ -165,7 +165,7 @@ const FoodSpinner: React.FC = () => {
         />
       )}
 
-      <div className="flex-[3] flex flex-col items-center justify-start h-full bg-gray-50 p-2 sm:p-4 md:p-8">
+      <div className="flex-[3] flex flex-col items-center justify-start h-full bg-gray-50 dark:bg-gray-900 p-2 sm:p-4 md:p-8 transition-colors duration-200">
 
 
 
@@ -174,7 +174,7 @@ const FoodSpinner: React.FC = () => {
           {/* Spinner */}
           <motion.div
             ref={spinnerRef}
-            className="w-full h-full rounded-full overflow-hidden border-8 border-gray-200 shadow-lg relative"
+            className="w-full h-full rounded-full overflow-hidden border-8 border-gray-200 dark:border-gray-700 shadow-lg relative transition-colors duration-200"
             animate={{ rotate: rotation }}
             transition={{
               duration: isSpinning ? 3 + Math.random() * 2 : 0,
@@ -237,11 +237,11 @@ const FoodSpinner: React.FC = () => {
           </motion.div>
 
           {/* Center point */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full border-8 border-gray-800 z-10"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white dark:bg-gray-800 rounded-full border-8 border-gray-800 dark:border-gray-300 z-10 transition-colors duration-200"></div>
 
           {/* Pointer */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 z-10">
-            <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[40px] border-l-transparent border-r-transparent border-b-gray-800 mx-auto"></div>
+            <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[40px] border-l-transparent border-r-transparent border-b-gray-800 dark:border-b-gray-300 mx-auto transition-colors duration-200"></div>
           </div>
         </div>
 
@@ -269,7 +269,7 @@ const FoodSpinner: React.FC = () => {
                 onClick={() => setShowPopup(false)}
               >
                 <motion.div
-                  className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl relative overflow-hidden"
+                  className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl relative overflow-hidden transition-colors duration-200"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{
                     scale: 1,
@@ -284,11 +284,11 @@ const FoodSpinner: React.FC = () => {
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-2">
                       <PartyPopper className="w-6 h-6 text-yellow-500" />
-                      <h3 className="text-xl font-bold">Kết quả quay</h3>
+                      <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">Kết quả quay</h3>
                     </div>
                     <button
                       onClick={() => setShowPopup(false)}
-                      className="text-gray-500 hover:text-gray-700"
+                      className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                     >
                       <XCircle className="w-6 h-6" />
                     </button>
@@ -317,7 +317,7 @@ const FoodSpinner: React.FC = () => {
                       </div>
                     )}
                     <motion.p
-                      className="text-gray-600 mb-2"
+                      className="text-gray-600 dark:text-gray-300 mb-2"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
@@ -338,7 +338,7 @@ const FoodSpinner: React.FC = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.8 }}
                     >
-                      <p className="text-gray-500 text-sm">Chúc bạn ngon miệng!</p>
+                      <p className="text-gray-500 dark:text-gray-400 text-sm">Chúc bạn ngon miệng!</p>
                     </motion.div>
                   </div>
 
@@ -358,39 +358,39 @@ const FoodSpinner: React.FC = () => {
       </div>
 
       {/* Sidebar - hidden on mobile by default, shown when showSidebar is true */}
-      <div className={`fixed inset-y-0 right-0 w-full sm:w-80 md:w-auto md:relative md:flex-1 flex flex-col h-full bg-white border-l border-gray-200 overflow-hidden shadow-lg transition-transform duration-300 z-40 ${showSidebar ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}`}>
+      <div className={`fixed inset-y-0 right-0 w-full sm:w-80 md:w-auto md:relative md:flex-1 flex flex-col h-full bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg transition-all duration-300 z-40 ${showSidebar ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}`}>
         <h2 className="text-lg sm:text-xl font-bold py-3 sm:py-4 text-center bg-blue-600 text-white sticky top-0">Danh Sách Món Ăn</h2>
 
         {/* Category indicator */}
-        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 py-2 sm:py-3 px-2 bg-gray-100 sticky top-[52px] sm:top-[60px] z-10">
+        <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 py-2 sm:py-3 px-2 bg-gray-100 dark:bg-gray-700 sticky top-[52px] sm:top-[60px] z-10 transition-colors duration-200">
           <button
             onClick={() => changeCategory('lunch')}
-            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm transition-colors ${currentCategory === 'lunch' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm transition-colors ${currentCategory === 'lunch' ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200'}`}
           >
             Đồ ăn trưa
           </button>
           <button
             onClick={() => changeCategory('snack')}
-            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm transition-colors ${currentCategory === 'snack' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm transition-colors ${currentCategory === 'snack' ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200'}`}
           >
             Đồ ăn vặt
           </button>
           <button
             onClick={() => changeCategory('drink')}
-            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm transition-colors ${currentCategory === 'drink' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm transition-colors ${currentCategory === 'drink' ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200'}`}
           >
             Đồ uống
           </button>
           <button
             onClick={() => changeCategory('alcohol')}
-            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm transition-colors ${currentCategory === 'alcohol' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm transition-colors ${currentCategory === 'alcohol' ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200'}`}
           >
             Món nhậu
           </button>
         </div>
 
         {/* Add food form */}
-        <div className="p-2 sm:p-4 border-b border-gray-200 sticky top-[104px] sm:top-[120px] bg-white z-10">
+        <div className="p-2 sm:p-4 border-b border-gray-200 dark:border-gray-700 sticky top-[104px] sm:top-[120px] bg-white dark:bg-gray-800 z-10 transition-colors duration-200">
           <div className="flex">
             <input
               ref={inputRef}
@@ -399,7 +399,7 @@ const FoodSpinner: React.FC = () => {
               onChange={(e) => setNewFood(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Nhập tên món ăn..."
-              className="flex-1 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
             />
             <button
               onClick={async () => await addFood()}
@@ -413,11 +413,11 @@ const FoodSpinner: React.FC = () => {
         {/* Food list */}
         <div className="flex-1 overflow-y-auto">
           {foods.length === 0 ? (
-            <p className="text-center py-8 text-gray-500">Chưa có món ăn nào. Hãy thêm món ăn!</p>
+            <p className="text-center py-8 text-gray-500 dark:text-gray-400">Chưa có món ăn nào. Hãy thêm món ăn!</p>
           ) : (
             <ul className="divide-y divide-gray-200">
               {foods.map((food) => (
-                <li key={food.id} className="p-2 sm:p-3 hover:bg-gray-50 flex items-center justify-between transition-colors">
+                <li key={food.id} className="p-2 sm:p-3 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center justify-between transition-colors">
                   {editingFood?.id === food.id ? (
                     <div className="flex-1 flex flex-col gap-2">
                       <div className="flex items-center gap-2">
@@ -427,7 +427,7 @@ const FoodSpinner: React.FC = () => {
                           onChange={(e) => setEditValue(e.target.value)}
                           onKeyDown={handleEditKeyDown}
                           autoFocus
-                          className="flex-1 px-2 py-1 text-sm sm:text-base border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                          className="flex-1 px-2 py-1 text-sm sm:text-base border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors duration-200"
                         />
                         <button
                           onClick={async () => await saveEdit()}
@@ -447,7 +447,7 @@ const FoodSpinner: React.FC = () => {
                           className="w-3 h-3 sm:w-4 sm:h-4 rounded-full flex-shrink-0"
                           style={{ backgroundColor: food.color }}
                         ></span>
-                        <span className="font-medium text-sm sm:text-base">{food.name}</span>
+                        <span className="font-medium text-sm sm:text-base text-gray-900 dark:text-gray-100">{food.name}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <button
@@ -460,8 +460,8 @@ const FoodSpinner: React.FC = () => {
                           onClick={async () => await deleteFood(food.id)}
                           disabled={foods.length <= 10}
                           className={`w-5 h-5 ${foods.length <= 10
-                              ? 'text-gray-400 cursor-not-allowed'
-                              : 'text-red-600 hover:text-red-800'
+                            ? 'text-gray-400 cursor-not-allowed'
+                            : 'text-red-600 hover:text-red-800'
                             }`}
                           title={foods.length <= 10 ? 'Không thể xóa khi còn 10 món hoặc ít hơn' : 'Xóa món ăn'}
                         >
