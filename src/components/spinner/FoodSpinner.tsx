@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Trash2, Edit, Save, X, RotateCw, Award, XCircle, PartyPopper, Menu, ChevronLeft } from 'lucide-react';
 import { lunchFoods, snackFoods, drinkFoods, alcoholFoods, Food as FoodType } from '../../data/foodCategories';
@@ -147,6 +147,17 @@ const FoodSpinner: React.FC = () => {
     }
   };
 
+  // Memoize gradient calculation for better performance
+  const spinnerGradient = useMemo(() => {
+    return 'conic-gradient(from 0deg, ' +
+      foods.map((food, index) => {
+        const segmentPercent = 100 / foods.length;
+        const startPercent = index * segmentPercent;
+        const endPercent = (index + 1) * segmentPercent;
+        return `${food.color} ${startPercent}% ${endPercent}%`;
+      }).join(', ') + ')';
+  }, [foods]);
+
   return (
     <div className="flex flex-col md:flex-row-reverse w-full h-screen mx-auto gap-0 p-0 overflow-hidden relative">
       {/* Mobile sidebar toggle button */}
@@ -181,13 +192,9 @@ const FoodSpinner: React.FC = () => {
               ease: isSpinning ? [0.2, 0.5, 0.3, 0.99] : 'linear',
             }}
             style={{
-              background: 'conic-gradient(from 0deg, ' +
-                foods.map((food, index) => {
-                  const segmentPercent = 100 / foods.length;
-                  const startPercent = index * segmentPercent;
-                  const endPercent = (index + 1) * segmentPercent;
-                  return `${food.color} ${startPercent}% ${endPercent}%`;
-                }).join(', ') + ')',
+              background: spinnerGradient,
+              willChange: isSpinning ? 'transform' : 'auto',
+              transform: 'translate3d(0, 0, 0)', // GPU acceleration
             }}
           >
             {/* Food names positioned correctly */}
@@ -211,7 +218,7 @@ const FoodSpinner: React.FC = () => {
                   style={{
                     left: `${x}%`,
                     top: `${y}%`,
-                    transform: 'translate(-50%, -50%)',
+                    transform: 'translate3d(-50%, -50%, 0)', // GPU acceleration
                     width: 'auto',
                     height: 'auto',
                   }}
@@ -219,7 +226,8 @@ const FoodSpinner: React.FC = () => {
                   <div
                     className="px-2 sm:px-3 py-1 sm:py-2 bg-black/60 rounded-full text-white font-medium text-xs sm:text-sm md:text-base whitespace-normal flex items-center justify-center shadow-lg max-w-[80px] sm:max-w-[120px] text-center"
                     style={{
-                      transform: `rotate(${middleAngle > 90 && middleAngle < 270 ? middleAngle + 180 : middleAngle}deg)`,
+                      transform: `rotate(${middleAngle > 90 && middleAngle < 270 ? middleAngle + 180 : middleAngle}deg) translate3d(0, 0, 0)`,
+                      willChange: 'transform',
                     }}
                   >
                     {food.imageUrl && (
@@ -260,7 +268,7 @@ const FoodSpinner: React.FC = () => {
         <AnimatePresence>
           {showPopup && selectedFood && (
             <>
-              <Confetti pieces={150} duration={5000} />
+              <Confetti pieces={window.innerWidth < 768 ? 50 : 150} duration={5000} />
               <motion.div
                 className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
                 initial={{ opacity: 0 }}
