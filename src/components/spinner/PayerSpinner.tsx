@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCw, Award, XCircle, PartyPopper, CreditCard } from 'lucide-react';
+import { RotateCw, XCircle, PartyPopper, CreditCard } from 'lucide-react';
 import { people, Person } from '../../data/people';
 import Confetti from './Confetti';
 import SuccessAnimation from './SuccessAnimation';
+import Wheel from './Wheel';
 
 const PayerSpinner: React.FC = () => {
   const [isSpinning, setIsSpinning] = useState(false);
@@ -11,7 +12,7 @@ const PayerSpinner: React.FC = () => {
   const [rotation, setRotation] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
 
-  const spinnerRef = useRef<HTMLDivElement>(null);
+
 
   const spinWheel = () => {
     if (people.length < 2) {
@@ -42,71 +43,15 @@ const PayerSpinner: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-gray-50 dark:bg-gray-900 p-2 sm:p-4 md:p-8 transition-colors duration-200">
+    <div className="flex flex-col items-center justify-center h-full bg-gray-50 dark:bg-gray-900 px-0 sm:px-4 md:px-8 py-2 sm:py-4 md:py-8 transition-colors duration-200">
       <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 sm:mb-6 md:mb-8 text-gray-800 dark:text-gray-100">
         <CreditCard className="inline-block w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 mr-2" />
         Ai sẽ trả tiền?
       </h2>
 
-      <div className="relative w-full max-w-[min(90vw,80vh)] sm:max-w-[80vh] aspect-square">
+      <div className="relative w-full max-w-[min(85vw,80vh)] sm:max-w-[80vh] aspect-square">
         {/* Spinner */}
-        <motion.div
-          ref={spinnerRef}
-          className="w-full h-full rounded-full overflow-hidden border-8 border-gray-200 dark:border-gray-700 shadow-lg relative transition-colors duration-200"
-          animate={{ rotate: rotation }}
-          transition={{
-            duration: isSpinning ? 3 + Math.random() * 2 : 0,
-            ease: isSpinning ? [0.2, 0.5, 0.3, 0.99] : 'linear',
-          }}
-          style={{
-            background: 'conic-gradient(from 0deg, ' +
-              people.map((person, index) => {
-                const segmentPercent = 100 / people.length;
-                const startPercent = index * segmentPercent;
-                const endPercent = (index + 1) * segmentPercent;
-                return `${person.color} ${startPercent}% ${endPercent}%`;
-              }).join(', ') + ')',
-          }}
-        >
-          {/* Person names positioned correctly */}
-          {people.map((person, index) => {
-            const segmentAngle = 360 / people.length;
-            const startAngle = index * segmentAngle;
-            const middleAngle = startAngle + segmentAngle / 2;
-
-            // Convert to radians for calculations
-            const angleRad = (middleAngle - 90) * Math.PI / 180; // -90 to start from top
-
-            // Calculate position (75% from center to edge)
-            const radius = 40; // percentage of container
-            const x = 50 + radius * Math.cos(angleRad);
-            const y = 50 + radius * Math.sin(angleRad);
-
-            return (
-              <div
-                key={person.id}
-                className="absolute flex items-center justify-center"
-                style={{
-                  left: `${x}%`,
-                  top: `${y}%`,
-                  transform: 'translate(-50%, -50%)',
-                  width: 'auto',
-                  height: 'auto',
-                }}
-              >
-                <div
-                  className="px-2 sm:px-3 py-1 sm:py-2 bg-black/60 rounded-full text-white font-medium text-xs sm:text-sm whitespace-normal flex items-center justify-center shadow-lg max-w-[80px] sm:max-w-[120px] text-center"
-                  style={{
-                    transform: `rotate(${middleAngle > 90 && middleAngle < 270 ? middleAngle + 180 : middleAngle}deg)`,
-                  }}
-                >
-                  <span className="mr-1 text-lg">{person.avatar}</span>
-                  {person.name}
-                </div>
-              </div>
-            );
-          })}
-        </motion.div>
+        <Wheel items={people} rotation={rotation} isSpinning={isSpinning} />
 
         {/* Center point */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white dark:bg-gray-800 rounded-full border-8 border-gray-800 dark:border-gray-300 z-10 transition-colors duration-200"></div>

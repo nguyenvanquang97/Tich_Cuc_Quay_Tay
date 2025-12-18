@@ -4,6 +4,7 @@ import { Plus, Trash2, Edit, Save, X, RotateCw, Award, XCircle, PartyPopper, Men
 import { lunchFoods, snackFoods, drinkFoods, alcoholFoods, Food as FoodType } from '../../data/foodCategories';
 import Confetti from './Confetti';
 import SuccessAnimation from './SuccessAnimation';
+import Wheel from './Wheel';
 
 const COLORS = [
   '#FF6B6B', '#4ECDC4', '#FFD166', '#06D6A0', '#118AB2',
@@ -26,8 +27,7 @@ const FoodSpinner: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
 
-  const spinnerRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+
 
   // Hàm chuyển đổi danh mục thực phẩm
   const changeCategory = (category: 'lunch' | 'snack' | 'drink' | 'alcohol') => {
@@ -147,16 +147,7 @@ const FoodSpinner: React.FC = () => {
     }
   };
 
-  // Memoize gradient calculation for better performance
-  const spinnerGradient = useMemo(() => {
-    return 'conic-gradient(from 0deg, ' +
-      foods.map((food, index) => {
-        const segmentPercent = 100 / foods.length;
-        const startPercent = index * segmentPercent;
-        const endPercent = (index + 1) * segmentPercent;
-        return `${food.color} ${startPercent}% ${endPercent}%`;
-      }).join(', ') + ')';
-  }, [foods]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="flex flex-col md:flex-row-reverse w-full h-screen mx-auto gap-0 p-0 overflow-hidden relative">
@@ -176,73 +167,14 @@ const FoodSpinner: React.FC = () => {
         />
       )}
 
-      <div className="flex-[3] flex flex-col items-center justify-start h-full bg-gray-50 dark:bg-gray-900 p-2 sm:p-4 md:p-8 transition-colors duration-200">
+      <div className="flex-[3] flex flex-col items-center justify-start h-full bg-gray-50 dark:bg-gray-900 px-0 sm:px-4 md:px-8 py-2 sm:py-4 md:py-8 transition-colors duration-200">
 
 
 
 
-        <div className="relative w-full max-w-[min(90vw,80vh)] sm:max-w-[80vh] aspect-square">
+        <div className="relative w-full max-w-[min(85vw,80vh)] sm:max-w-[80vh] aspect-square">
           {/* Spinner */}
-          <motion.div
-            ref={spinnerRef}
-            className="w-full h-full rounded-full overflow-hidden border-8 border-gray-200 dark:border-gray-700 shadow-lg relative transition-colors duration-200"
-            animate={{ rotate: rotation }}
-            transition={{
-              duration: isSpinning ? 3 + Math.random() * 2 : 0,
-              ease: isSpinning ? [0.2, 0.5, 0.3, 0.99] : 'linear',
-            }}
-            style={{
-              background: spinnerGradient,
-              willChange: isSpinning ? 'transform' : 'auto',
-              transform: 'translate3d(0, 0, 0)', // GPU acceleration
-            }}
-          >
-            {/* Food names positioned correctly */}
-            {foods.map((food, index) => {
-              const segmentAngle = 360 / foods.length;
-              const startAngle = index * segmentAngle;
-              const middleAngle = startAngle + segmentAngle / 2;
-
-              // Convert to radians for calculations
-              const angleRad = (middleAngle - 90) * Math.PI / 180; // -90 to start from top
-
-              // Calculate position (75% from center to edge)
-              const radius = 40; // percentage of container
-              const x = 50 + radius * Math.cos(angleRad);
-              const y = 50 + radius * Math.sin(angleRad);
-
-              return (
-                <div
-                  key={food.id}
-                  className="absolute flex items-center justify-center"
-                  style={{
-                    left: `${x}%`,
-                    top: `${y}%`,
-                    transform: 'translate3d(-50%, -50%, 0)', // GPU acceleration
-                    width: 'auto',
-                    height: 'auto',
-                  }}
-                >
-                  <div
-                    className="px-2 sm:px-3 py-1 sm:py-2 bg-black/60 rounded-full text-white font-medium text-xs sm:text-sm md:text-base whitespace-normal flex items-center justify-center shadow-lg max-w-[80px] sm:max-w-[120px] text-center"
-                    style={{
-                      transform: `rotate(${middleAngle > 90 && middleAngle < 270 ? middleAngle + 180 : middleAngle}deg) translate3d(0, 0, 0)`,
-                      willChange: 'transform',
-                    }}
-                  >
-                    {food.imageUrl && (
-                      <img
-                        src={food.imageUrl}
-                        alt={food.name}
-                        className="w-4 h-4 object-cover rounded-full mr-1"
-                      />
-                    )}
-                    {food.name}
-                  </div>
-                </div>
-              );
-            })}
-          </motion.div>
+          <Wheel items={foods} rotation={rotation} isSpinning={isSpinning} />
 
           {/* Center point */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white dark:bg-gray-800 rounded-full border-8 border-gray-800 dark:border-gray-300 z-10 transition-colors duration-200"></div>
